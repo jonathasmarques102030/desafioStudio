@@ -1,10 +1,6 @@
 import * as React from "react";
 
-import {
-  Box,
-  Button,
-  Grid,
-} from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
@@ -49,6 +45,61 @@ export default function MainTab() {
     setValue(newValue);
   };
 
+  const item: {
+    [key: string]: { imagem: string; nome: string; autor: string };
+  } = {
+    filme1: {
+      imagem: "/logoFilme.svg",
+      nome: "O duque e eu (Os Bridgertons – Livro 1): O livro de Daphne",
+      autor: "Julia Quinn",
+    },
+    filme2: {
+      imagem: "/logoFilme.svg",
+      nome: "O duque e eu (Os Bridgertons – Livro 1): O livro de Daphne",
+      autor: "Julia Quinn",
+    },
+    filme3: {
+      imagem: "/logoFilme.svg",
+      nome: "O duque e eu (Os Bridgertons – Livro 1): O livro de Daphne",
+      autor: "Julia Quinn",
+    },
+    filme4: {
+      imagem: "/logoFilme.svg",
+      nome: "O duque e eu (Os Bridgertons – Livro 1): O livro de Daphne",
+      autor: "Julia Quinn",
+    },
+    filme5: {
+      imagem: "/logoFilme.svg",
+      nome: "O duque e eu (Os Bridgertons – Livro 1): O livro de Daphne",
+      autor: "Julia Quinn",
+    },
+    filme6: {
+      imagem: "/logoFilme.svg",
+      nome: "O duque e eu (Os Bridgertons – Livro 1): O livro de Daphne",
+      autor: "Julia Quinn",
+    },
+  };
+
+  const artistas: {
+    [key: string]: { imagem: string; nome: string; livros: string };
+  } = {
+    artista1: {
+      imagem: "/mulher.svg",
+      nome: "Connie Brockway",
+      livros: "6 livros",
+    },
+    artista2: {
+      imagem: "/homem.svg",
+      nome: "Connie Brockway",
+      livros: "6 livros",
+    },
+    artista3: {
+      imagem: "/senhor.svg",
+      nome: "Jakob Nielsen",
+      livros: "53 livros",
+    },
+  };
+
   return (
     <>
       <Grid container>
@@ -76,7 +127,7 @@ export default function MainTab() {
           </Box>
           <CustomTabPanel value={value} index={0}>
             <Grid container>
-              <Grid item mt={3} xs={12} sx={{ border: "3px solid" }}>
+              <Grid item mt={3} xs={12}>
                 <Box
                   sx={{
                     display: "flex",
@@ -84,9 +135,73 @@ export default function MainTab() {
                     justifyContent: "space-between",
                   }}
                 >
-                  <Typography >Livros favoritos</Typography>
+                  <Typography>Livros favoritos</Typography>
                   <Button sx={{ color: "#A076F2" }}>ver tudo</Button>
                 </Box>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                mt={3}
+                display={"flex"}
+                sx={{ justifyContent: "center" }}
+              >
+                {Object.keys(item).map((key) => (
+                  <>
+                    <Grid xs={2} sx={{ margin: 0 }}>
+                      <Box
+                        sx={{
+                          margin: "auto",
+                          alignItems: "center",
+                          textAlign: "center",
+                        }}
+                      >
+                        <img src={item[key].imagem} alt="" />
+                        <Typography>{item[key].nome}</Typography>
+                        <Typography>{item[key].autor}</Typography>
+                      </Box>
+                    </Grid>
+                  </>
+                ))}
+              </Grid>
+              <Grid item mt={4} xs={12}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Typography>Artistas favoritos</Typography>
+                  <Button sx={{ color: "#A076F2" }}>ver todos</Button>
+                </Box>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                mt={3}
+                display={"flex"}
+                sx={{ justifyContent: "center", gap: 3 }}
+              >
+                {Object.keys(artistas).map((key) => (
+                  <>
+                    <Grid xs={3} display={"flex"} sx={{ alignItems: 'center' }}>
+                      <Box
+                        sx={{
+                          alignItems: "center",
+                          textAlign: "center",
+                          gap: 1
+                        }}
+                      >
+                        <img src={artistas[key].imagem} alt="" />
+                      </Box>
+                      <Box>
+                        <Typography>{artistas[key].nome}</Typography>
+                        <Typography>{artistas[key].livros}</Typography>
+                      </Box>
+                    </Grid>
+                  </>
+                ))}
               </Grid>
             </Grid>
           </CustomTabPanel>
