@@ -23,6 +23,27 @@ export default function App() {
     <>
       <Header></Header>
       <MainTab></MainTab>
+      <Grid container mt={5} sx={{ background: "#A076F2" }}>
+        <Grid
+          item
+          xs={10}
+          display={"flex"}
+          sx={{
+            margin: "auto",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Box ml={8}>
+            <img src="/logoFooter.svg" alt="" />
+          </Box>
+          <Box>
+            <Typography color={'#FFF'}>
+              Todos os direitos reservados. Studio Sol Books © 2023
+            </Typography>
+          </Box>
+        </Grid>
+      </Grid>
     </>
   );
 }
