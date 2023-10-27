@@ -6,13 +6,33 @@ import ShareIcon from "@mui/icons-material/Share";
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 
 
+import { gql, useQuery } from "@apollo/client";
+
+
 const filme: { imagem: string; nome: string; autor: string } = {
   imagem: "/logoFilme.svg",
   nome: "O duque e eu (Os Bridgertons – Livro 1): O livro de Daphne",
   autor: "Julia Quinn",
 };
 
+const OBTER_INFORMACOES = gql`
+  query obterInformacoes {
+    favoriteBooks {
+      name
+      cover
+      author {
+        id
+        name
+        booksCount
+        picture
+      }
+    }
+  }
+`;
+
 export default function Body() {
+  
+
   return (
     <>
       <Grid container>

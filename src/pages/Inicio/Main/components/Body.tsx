@@ -1,15 +1,12 @@
 import * as React from "react";
 
 import { Box, Button, Grid } from "@mui/material";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
-import { emphasize, styled } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 
 import { gql, useQuery } from "@apollo/client";
-import { keyboardImplementationWrapper } from "@testing-library/user-event/dist/keyboard";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -52,6 +49,8 @@ const OBTER_INFORMACOES = gql`
       author {
         id
         name
+        booksCount
+        picture
       }
     }
   }
@@ -62,7 +61,7 @@ export default function Body() {
 
   const { data } = useQuery<{
     favoriteBooks: Array<{
-      author: { name: string };
+      author: { name: string; booksCount: string; picture: string };
       cover: string;
       name: string;
     }>;
@@ -75,28 +74,15 @@ export default function Body() {
       cover: book.cover,
     })) || [];
 
+  const artistas =
+    data?.favoriteBooks.map((book) => ({
+      nameAuthor: book.author.name,
+      booksAuthor: book.author.booksCount,
+      pictureAuthor: book.author.picture,
+    })) || [];
+
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
-  };
-
-  const artistas: {
-    [key: string]: { imagem: string; nome: string; livros: string };
-  } = {
-    artista1: {
-      imagem: "/mulher.svg",
-      nome: "Connie Brockway",
-      livros: "6 livros",
-    },
-    artista2: {
-      imagem: "/homem.svg",
-      nome: "Connie Brockway",
-      livros: "6 livros",
-    },
-    artista3: {
-      imagem: "/senhor.svg",
-      nome: "Jakob Nielsen",
-      livros: "53 livros",
-    },
   };
 
   const StyledBreadcrumb = styled(Chip)(({ theme }) => {
@@ -107,11 +93,11 @@ export default function Body() {
       color: "#A076F2",
       fontWeight: "bold",
       "&:hover, &:focus": {
-        backgroundColor: '#A076F2',
+        backgroundColor: "#A076F2",
       },
       "&:active": {
         boxShadow: theme.shadows[1],
-        backgroundColor: '#A076F2',
+        backgroundColor: "#A076F2",
       },
     };
   }) as typeof Chip;
@@ -128,6 +114,7 @@ export default function Body() {
             }}
           >
             <Typography
+              variant="h4"
               sx={{
                 gap: 1,
                 color: "#555555",
@@ -138,66 +125,71 @@ export default function Body() {
             >
               Livros favoritos
             </Typography>
-            <Button sx={{ color: "#A076F2" }}>ver tudo</Button>
+            <Button
+              sx={{
+                gap: 1,
+                color: "#A076F2",
+                textTransform: "none",
+                fontWeight: "700",
+                size: "18px",
+              }}
+            >
+              ver tudo
+            </Button>
           </Box>
         </Grid>
-        <Grid
-          item
-          xs={12}
-          mt={3}
-          display={"flex"}
-        >
+        <Grid item xs={12} mt={3} display={"flex"}>
           {informacoes.slice(0, 6).map((book, index) => (
-    <Grid
-      xs={2}
-      key={index}
-      sx={{
-        margin: 0,
-        display: "flex",
-      }}
-    >
-      <Box
-        sx={{
-          textAlign: "initial",
-          maxHeight: "262px",
-          maxWidth: "150px",
-          overflow: "auto",
-        }}
-      >
-        <img
-          src={book.cover}
-          alt=""
-          width={"136px"}
-          height={"198px"}
-          style={{ borderRadius: "10px" }}
-        />
-        <Typography
-          sx={{
-            color: "#555555",
-            textTransform: "none",
-            fontWeight: "700",
-            fontSize: "16px",
-            maxHeight: "2em", 
-            overflow: "hidden", 
-            textOverflow: "ellipsis", 
-            whiteSpace: "nowrap", 
-          }}
-        >
-          {book.name}
-        </Typography>
-        <Typography
-          sx={{
-            color: "#757575",
-            textTransform: "none",
-            fontWeight: "700",
-            size: "14px",
-          }}
-        >
-          {book.nameAuthor}
-        </Typography>
-      </Box>
-    </Grid>
-  ))}
+            <Grid
+              xs={2}
+              key={index}
+              sx={{
+                margin: 0,
+                display: "flex",
+              }}
+            >
+              <Box
+                sx={{
+                  textAlign: "initial",
+                  maxHeight: "262px",
+                  maxWidth: "150px",
+                  overflow: "auto",
+                }}
+              >
+                <img
+                  src={book.cover}
+                  alt=""
+                  width={"136px"}
+                  height={"198px"}
+                  style={{ borderRadius: "10px" }}
+                />
+                <Typography
+                  sx={{
+                    color: "#555555",
+                    textTransform: "none",
+                    fontWeight: "700",
+                    fontSize: "16px",
+                    maxHeight: "2em",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {book.name}
+                </Typography>
+                <Typography
+                  sx={{
+                    color: "#757575",
+                    textTransform: "none",
+                    fontWeight: "700",
+                    size: "14px",
+                  }}
+                >
+                  {book.nameAuthor}
+                </Typography>
+              </Box>
+            </Grid>
+          ))}
         </Grid>
         <Grid item mt={4} xs={12}>
           <Box
@@ -208,6 +200,7 @@ export default function Body() {
             }}
           >
             <Typography
+              variant="h4"
               sx={{
                 gap: 1,
                 color: "#555555",
@@ -218,31 +211,48 @@ export default function Body() {
             >
               Artistas favoritos
             </Typography>
-            <Button sx={{ color: "#A076F2" }}>ver todos</Button>
+            <Button
+              sx={{
+                gap: 1,
+                color: "#A076F2",
+                textTransform: "none",
+                fontWeight: "700",
+                size: "18px",
+              }}
+            >
+              ver todos
+            </Button>
           </Box>
         </Grid>
         <Grid
           item
           xs={12}
-          mt={3}
+          mt={4}
           display={"flex"}
-          sx={{ margin: 0, justifyContent: 'space-between' }}
+          sx={{ margin: 0, justifyContent: "space-between" }}
         >
-          {Object.keys(artistas).map((key) => (
+          {artistas.slice(0, 3).map((books, index) => (
             <>
               <Grid
+                key={index}
                 xs={3}
                 display={"flex"}
-                sx={{ alignItems: "center", gap: 2, margin: 0  }}
+                sx={{ alignItems: "center", gap: 2, margin: 0, mt: 4 }}
               >
                 <Box
                   sx={{
                     alignItems: "center",
                     textAlign: "initial",
-                    justifyContent: 'flex-start'
+                    justifyContent: "flex-start",
                   }}
                 >
-                  <img src={artistas[key].imagem} alt="" />
+                  <img
+                    src={books.pictureAuthor}
+                    alt=""
+                    width={"68px"}
+                    height={"68px"}
+                    style={{ borderRadius: "15px" }}
+                  />
                 </Box>
                 <Box>
                   <Typography
@@ -254,7 +264,7 @@ export default function Body() {
                       size: "16px",
                     }}
                   >
-                    {artistas[key].nome}
+                    {books.nameAuthor}
                   </Typography>
                   <Typography
                     sx={{
@@ -265,7 +275,7 @@ export default function Body() {
                       size: "14px",
                     }}
                   >
-                    {artistas[key].livros}
+                    {books.booksAuthor}
                   </Typography>
                 </Box>
               </Grid>
@@ -281,6 +291,7 @@ export default function Body() {
             }}
           >
             <Typography
+              variant="h4"
               sx={{
                 gap: 1,
                 color: "#555555",
@@ -295,10 +306,22 @@ export default function Body() {
         </Grid>
         <Grid item mt={5} ml={0}>
           <Stack direction="row" spacing={2} color={"#A076F2"}>
-            <Chip label="Todos" sx={{ backgroundColor: '#A076F2', color: '#FFF' }} />
-            <Chip label="Romance" sx={{ backgroundColor: '#A076F2', color: '#FFF' }} />
-            <Chip label="Aventura" sx={{ backgroundColor: '#A076F2', color: '#FFF' }} />
-            <Chip label="Comédia" sx={{ backgroundColor: '#A076F2', color: '#FFF' }} />
+            <Chip
+              label="Todos"
+              sx={{ backgroundColor: "#A076F2", color: "#FFF" }}
+            />
+            <Chip
+              label="Romance"
+              sx={{ backgroundColor: "#A076F2", color: "#FFF" }}
+            />
+            <Chip
+              label="Aventura"
+              sx={{ backgroundColor: "#A076F2", color: "#FFF" }}
+            />
+            <Chip
+              label="Comédia"
+              sx={{ backgroundColor: "#A076F2", color: "#FFF" }}
+            />
           </Stack>
         </Grid>
         <Grid container spacing={2} mt={5}>

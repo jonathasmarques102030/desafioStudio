@@ -36,6 +36,7 @@ export default function Header() {
             margin: "auto",
             alignItems: "center",
             justifyContent: "space-between",
+            marginTop: 1
           }}
         >
           <Box>
@@ -47,21 +48,22 @@ export default function Header() {
               color="info"
             >
               <InputLabel color="info" htmlFor="outlined-adornment-password">
-                buscar por localidade
+                Busque um livro
               </InputLabel>
               <OutlinedInput
                 id="outlined-adornment-password"
                 endAdornment={
                   <InputAdornment position="end">
-                    <SearchIcon color="disabled" />
+                    <SearchIcon sx={{ color: '#9E9E9E' }} />
                   </InputAdornment>
                 }
-                label="Buscar por localidade"
+                label="Busque um livro"
+                sx={{ borderRadius: '10px' }}
               />
             </FormControl>
           </Box>
           <Box>
-            <Button sx={{ gap: 1, color: "#555555" }}>
+            <Button sx={{ gap: 1, color: "#555555", textTransform: 'none', fontWeight: '700', size: '18px' }}>
               <InputAdornment position="end">
                 <AddCircleIcon sx={{ color: "#555555" }} />
               </InputAdornment>
@@ -69,7 +71,7 @@ export default function Header() {
             </Button>
           </Box>
           <Box>
-            <Button sx={{ gap: 1, color: "#555555" }}>
+            <Button sx={{ gap: 1, color: "#555555", textTransform: 'none', fontWeight: '700', size: '18px' }}>
               <InputAdornment position="end">
                 <FavoriteIcon sx={{ color: "#555555" }} />
               </InputAdornment>
@@ -77,9 +79,9 @@ export default function Header() {
             </Button>
           </Box>
           <Box>
-            <Button sx={{ gap: 1, color: "#555555" }}>
+            <Button sx={{ gap: 1, color: "#555555" }} disableRipple>
               <InputAdornment position="end">
-                <img src={data?.userPicture} alt="" width={"32px"} />
+                <img src={data?.userPicture} alt="" style={{ borderRadius: '100%' }} width={"32px"} height={'32px'} />
               </InputAdornment>
             </Button>
           </Box>
