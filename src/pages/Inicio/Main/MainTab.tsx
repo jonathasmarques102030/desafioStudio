@@ -43,63 +43,14 @@ function a11yProps(index: number) {
   };
 }
 
-const OBTER_INFORMACOES = gql`
-  query obterInformacoes {
-    favoriteBooks {
-      name
-      author {
-        id
-        name
-      }
-    }
-  }
-`;
-
 export default function MainTab() {
   const [value, setValue] = React.useState(0);
-
-  const { data } = useQuery<{[key: string]: { author: string; name: string }}>(OBTER_INFORMACOES);
-
-  console.log(data);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
-  const item: {
-    [key: string]: { imagem: string; nome: string; autor: string };
-  } = {
-    filme1: {
-      imagem: "/logoFilme.svg",
-      nome: "O duque e eu (Os Bridgertons – Livro 1): O livro de Daphne",
-      autor: "Julia Quinn",
-    },
-    filme2: {
-      imagem: "/logoFilme.svg",
-      nome: "O duque e eu (Os Bridgertons – Livro 1): O livro de Daphne",
-      autor: "Julia Quinn",
-    },
-    filme3: {
-      imagem: "/logoFilme.svg",
-      nome: "O duque e eu (Os Bridgertons – Livro 1): O livro de Daphne",
-      autor: "Julia Quinn",
-    },
-    filme4: {
-      imagem: "/logoFilme.svg",
-      nome: "O duque e eu (Os Bridgertons – Livro 1): O livro de Daphne",
-      autor: "Julia Quinn",
-    },
-    filme5: {
-      imagem: "/logoFilme.svg",
-      nome: "O duque e eu (Os Bridgertons – Livro 1): O livro de Daphne",
-      autor: "Julia Quinn",
-    },
-    filme6: {
-      imagem: "/logoFilme.svg",
-      nome: "O duque e eu (Os Bridgertons – Livro 1): O livro de Daphne",
-      autor: "Julia Quinn",
-    },
-  };
+  
 
   const artistas: {
     [key: string]: { imagem: string; nome: string; livros: string };
@@ -202,13 +153,14 @@ export default function MainTab() {
               aria-label="basic tabs example"
             >
               <Tab
-                sx={{ color: "#555555" }}
+                sx={{ gap: 1, color: "#555555", textTransform: 'none', fontWeight: '700', size: '18px' }}
                 label="Meus livros"
                 {...a11yProps(0)}
               />
               <Tab
                 sx={{ color: "#555555" }}
                 label="Emprestados"
+                disabled
                 {...a11yProps(1)}
               />
             </Tabs>

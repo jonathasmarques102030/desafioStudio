@@ -23,6 +23,6 @@ export interface Author {
     favoriteAuthors: Book[]
     allBooks: Book[];
     book: Book
-  };
+};
 
   

@@ -9,6 +9,7 @@ import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 
 import { gql, useQuery } from "@apollo/client";
+import { keyboardImplementationWrapper } from "@testing-library/user-event/dist/keyboard";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -47,6 +48,7 @@ const OBTER_INFORMACOES = gql`
   query obterInformacoes {
     favoriteBooks {
       name
+      cover
       author {
         id
         name
@@ -58,47 +60,23 @@ const OBTER_INFORMACOES = gql`
 export default function Body() {
   const [value, setValue] = React.useState(0);
 
-  const { data } = useQuery<{[key: string]: { author: string; name: string }}>(OBTER_INFORMACOES);
+  const { data } = useQuery<{
+    favoriteBooks: Array<{
+      author: { name: string };
+      cover: string;
+      name: string;
+    }>;
+  }>(OBTER_INFORMACOES);
 
-  console.log(data);
+  const informacoes =
+    data?.favoriteBooks.map((book) => ({
+      name: book.name,
+      nameAuthor: book.author.name,
+      cover: book.cover,
+    })) || [];
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
-  };
-
-  const item: {
-    [key: string]: { imagem: string; nome: string; autor: string };
-  } = {
-    filme1: {
-      imagem: "/logoFilme.svg",
-      nome: "O duque e eu (Os Bridgertons – Livro 1): O livro de Daphne",
-      autor: "Julia Quinn",
-    },
-    filme2: {
-      imagem: "/logoFilme.svg",
-      nome: "O duque e eu (Os Bridgertons – Livro 1): O livro de Daphne",
-      autor: "Julia Quinn",
-    },
-    filme3: {
-      imagem: "/logoFilme.svg",
-      nome: "O duque e eu (Os Bridgertons – Livro 1): O livro de Daphne",
-      autor: "Julia Quinn",
-    },
-    filme4: {
-      imagem: "/logoFilme.svg",
-      nome: "O duque e eu (Os Bridgertons – Livro 1): O livro de Daphne",
-      autor: "Julia Quinn",
-    },
-    filme5: {
-      imagem: "/logoFilme.svg",
-      nome: "O duque e eu (Os Bridgertons – Livro 1): O livro de Daphne",
-      autor: "Julia Quinn",
-    },
-    filme6: {
-      imagem: "/logoFilme.svg",
-      nome: "O duque e eu (Os Bridgertons – Livro 1): O livro de Daphne",
-      autor: "Julia Quinn",
-    },
   };
 
   const artistas: {
@@ -121,69 +99,19 @@ export default function Body() {
     },
   };
 
-  const biblioteca: {
-    [key: string]: { imagem: string; nome: string; autor: string };
-  } = {
-    filme1: {
-      imagem: "/logoFilme.svg",
-      nome: "O duque e eu (Os Bridgertons – Livro 1)",
-      autor: "Julia Quinn",
-    },
-    filme2: {
-      imagem: "/logoFilme.svg",
-      nome: "O duque e eu (Os Bridgertons – Livro 1)",
-      autor: "Julia Quinn",
-    },
-    filme3: {
-      imagem: "/logoFilme.svg",
-      nome: "O duque e eu (Os Bridgertons – Livro 1)",
-      autor: "Julia Quinn",
-    },
-    filme4: {
-      imagem: "/logoFilme.svg",
-      nome: "O duque e eu (Os Bridgertons – Livro 1)",
-      autor: "Julia Quinn",
-    },
-    filme5: {
-      imagem: "/logoFilme.svg",
-      nome: "O duque e eu (Os Bridgertons – Livro 1)",
-      autor: "Julia Quinn",
-    },
-    filme6: {
-      imagem: "/logoFilme.svg",
-      nome: "O duque e eu (Os Bridgertons – Livro 1)",
-      autor: "Julia Quinn",
-    },
-    filme7: {
-      imagem: "/logoFilme.svg",
-      nome: "O duque e eu (Os Bridgertons – Livro 1)",
-      autor: "Julia Quinn",
-    },
-    filme8: {
-      imagem: "/logoFilme.svg",
-      nome: "O duque e eu (Os Bridgertons – Livro 1)",
-      autor: "Julia Quinn",
-    },
-    filme9: {
-      imagem: "/logoFilme.svg",
-      nome: "O duque e eu (Os Bridgertons – Livro 1)",
-      autor: "Julia Quinn",
-    },
-  };
-
   const StyledBreadcrumb = styled(Chip)(({ theme }) => {
     const backgroundColor = "#A076F2";
     return {
       backgroundColor,
       height: theme.spacing(5),
-      color: "#FFF",
+      color: "#A076F2",
       fontWeight: "bold",
       "&:hover, &:focus": {
-        backgroundColor: emphasize(backgroundColor, 0.06),
+        backgroundColor: '#A076F2',
       },
       "&:active": {
         boxShadow: theme.shadows[1],
-        backgroundColor: emphasize(backgroundColor, 0.12),
+        backgroundColor: '#A076F2',
       },
     };
   }) as typeof Chip;
@@ -191,135 +119,237 @@ export default function Body() {
   return (
     <>
       <Grid container>
-              <Grid item mt={3} xs={12}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <Typography>Livros favoritos</Typography>
-                  <Button sx={{ color: "#A076F2" }}>ver tudo</Button>
-                </Box>
-              </Grid>
+        <Grid item mt={3} xs={12}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <Typography
+              sx={{
+                gap: 1,
+                color: "#555555",
+                textTransform: "none",
+                fontWeight: "700",
+                size: "28px",
+              }}
+            >
+              Livros favoritos
+            </Typography>
+            <Button sx={{ color: "#A076F2" }}>ver tudo</Button>
+          </Box>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          mt={3}
+          display={"flex"}
+        >
+          {informacoes.slice(0, 6).map((book, index) => (
+    <Grid
+      xs={2}
+      key={index}
+      sx={{
+        margin: 0,
+        display: "flex",
+      }}
+    >
+      <Box
+        sx={{
+          textAlign: "initial",
+          maxHeight: "262px",
+          maxWidth: "150px",
+          overflow: "auto",
+        }}
+      >
+        <img
+          src={book.cover}
+          alt=""
+          width={"136px"}
+          height={"198px"}
+          style={{ borderRadius: "10px" }}
+        />
+        <Typography
+          sx={{
+            color: "#555555",
+            textTransform: "none",
+            fontWeight: "700",
+            fontSize: "16px",
+            maxHeight: "2em", 
+            overflow: "hidden", 
+            textOverflow: "ellipsis", 
+            whiteSpace: "nowrap", 
+          }}
+        >
+          {book.name}
+        </Typography>
+        <Typography
+          sx={{
+            color: "#757575",
+            textTransform: "none",
+            fontWeight: "700",
+            size: "14px",
+          }}
+        >
+          {book.nameAuthor}
+        </Typography>
+      </Box>
+    </Grid>
+  ))}
+        </Grid>
+        <Grid item mt={4} xs={12}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <Typography
+              sx={{
+                gap: 1,
+                color: "#555555",
+                textTransform: "none",
+                fontWeight: "700",
+                size: "28px",
+              }}
+            >
+              Artistas favoritos
+            </Typography>
+            <Button sx={{ color: "#A076F2" }}>ver todos</Button>
+          </Box>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          mt={3}
+          display={"flex"}
+          sx={{ margin: 0, justifyContent: 'space-between' }}
+        >
+          {Object.keys(artistas).map((key) => (
+            <>
               <Grid
-                item
-                xs={12}
-                mt={3}
+                xs={3}
                 display={"flex"}
-                sx={{ justifyContent: "center" }}
+                sx={{ alignItems: "center", gap: 2, margin: 0  }}
               >
-                {data && Object.keys(data).map((key) => (
-                  <>
-                    <Grid xs={2} sx={{ margin: 0 }}>
-                      <Box
-                        sx={{
-                          margin: "auto",
-                          alignItems: "center",
-                          textAlign: "center",
-                        }}
-                      >
-                        <img src='/logo.svg' alt="" />
-                        <Typography>{data[key].name}</Typography>
-                        <Typography>{data[key].author}</Typography>
-                      </Box>
-                    </Grid>
-                  </>
-                ))}
-              </Grid>
-              <Grid item mt={4} xs={12}>
                 <Box
                   sx={{
-                    display: "flex",
                     alignItems: "center",
-                    justifyContent: "space-between",
+                    textAlign: "initial",
+                    justifyContent: 'flex-start'
                   }}
                 >
-                  <Typography>Artistas favoritos</Typography>
-                  <Button sx={{ color: "#A076F2" }}>ver todos</Button>
+                  <img src={artistas[key].imagem} alt="" />
+                </Box>
+                <Box>
+                  <Typography
+                    sx={{
+                      gap: 1,
+                      color: "#555555",
+                      textTransform: "none",
+                      fontWeight: "700",
+                      size: "16px",
+                    }}
+                  >
+                    {artistas[key].nome}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      gap: 1,
+                      color: "#757575",
+                      textTransform: "none",
+                      fontWeight: "700",
+                      size: "14px",
+                    }}
+                  >
+                    {artistas[key].livros}
+                  </Typography>
                 </Box>
               </Grid>
-              <Grid
-                item
-                xs={12}
-                mt={3}
-                display={"flex"}
-                sx={{ justifyContent: "center" }}
+            </>
+          ))}
+        </Grid>
+        <Grid item mt={5} xs={12}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <Typography
+              sx={{
+                gap: 1,
+                color: "#555555",
+                textTransform: "none",
+                fontWeight: "700",
+                size: "28px",
+              }}
+            >
+              Biblioteca
+            </Typography>
+          </Box>
+        </Grid>
+        <Grid item mt={5} ml={0}>
+          <Stack direction="row" spacing={2} color={"#A076F2"}>
+            <Chip label="Todos" sx={{ backgroundColor: '#A076F2', color: '#FFF' }} />
+            <Chip label="Romance" sx={{ backgroundColor: '#A076F2', color: '#FFF' }} />
+            <Chip label="Aventura" sx={{ backgroundColor: '#A076F2', color: '#FFF' }} />
+            <Chip label="Comédia" sx={{ backgroundColor: '#A076F2', color: '#FFF' }} />
+          </Stack>
+        </Grid>
+        <Grid container spacing={2} mt={5}>
+          {informacoes.map((book, index) => (
+            <Grid item xs={4} key={index}>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  textAlign: "initial",
+                  justifyContent: "flex-start",
+                  gap: 2,
+                  height: "100px",
+                }}
               >
-                {Object.keys(artistas).map((key) => (
-                  <>
-                    <Grid
-                      xs={3}
-                      display={"flex"}
-                      sx={{ alignItems: "center", gap: 2, margin: "auto" }}
-                    >
-                      <Box
-                        sx={{
-                          alignItems: "center",
-                          textAlign: "center",
-                        }}
-                      >
-                        <img src={artistas[key].imagem} alt="" />
-                      </Box>
-                      <Box>
-                        <Typography sx={{ color: "#555555" }}>
-                          {artistas[key].nome}
-                        </Typography>
-                        <Typography sx={{ color: "#757575" }}>
-                          {artistas[key].livros}
-                        </Typography>
-                      </Box>
-                    </Grid>
-                  </>
-                ))}
-              </Grid>
-              <Grid item mt={5} xs={12}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <Typography>Biblioteca</Typography>
+                <img
+                  src={book.cover}
+                  alt=""
+                  width={"68px"}
+                  height={"100px"}
+                  style={{ borderRadius: "10px" }}
+                />
+                <Box>
+                  <Typography
+                    sx={{
+                      gap: 1,
+                      color: "#555555",
+                      textTransform: "none",
+                      fontWeight: "700",
+                      size: "28px",
+                    }}
+                  >
+                    {book.name}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      gap: 1,
+                      color: "#757575",
+                      textTransform: "none",
+                      fontWeight: "700",
+                      size: "28px",
+                    }}
+                  >
+                    {book.nameAuthor}
+                  </Typography>
                 </Box>
-              </Grid>
-              <Grid item mt={5} ml={6} >
-                <Stack direction="row" spacing={2} color={"#A076F2"}>
-                  <Chip label="Todos" variant="outlined" />
-                  <Chip label="Romance" variant="outlined" />
-                  <Chip label="Aventura" variant="outlined" />
-                  <Chip label="Comédia" variant="outlined" />
-                </Stack>
-              </Grid>
-              <Grid container spacing={2} mt={5}>
-                {Object.keys(biblioteca).map((key) => (
-                  <Grid item xs={4} key={key}>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        textAlign: "center",
-                        justifyContent: 'center',
-                        gap: 2
-                      }}
-                    >
-                      <img src={biblioteca[key].imagem} alt="" width={75} />
-                      <Box>
-                        <Typography sx={{ color: "#555555" }}>
-                          {biblioteca[key].nome}
-                        </Typography>
-                        <Typography sx={{ color: "#757575" }}>
-                          {biblioteca[key].autor}
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </Grid>
-                ))}
-              </Grid>
+              </Box>
             </Grid>
+          ))}
+        </Grid>
+      </Grid>
     </>
   );
 }
-

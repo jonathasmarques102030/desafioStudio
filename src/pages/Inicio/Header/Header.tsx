@@ -20,23 +20,10 @@ const OBTER_IMAGEM = gql`
   }
 `;
 
-const OBTER_INFORMACOES = gql`
-  query obterInformacoes {
-    favoriteBooks {
-      name
-      author {
-        id
-        name
-      }
-    }
-  }
-`;
-
 export default function Header() {
   const { data } = useQuery<{ userPicture: string }>(OBTER_IMAGEM);
 
   console.log(data?.userPicture);
-
   return (
     <>
       <Grid container>
