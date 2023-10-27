@@ -8,6 +8,8 @@ import { emphasize, styled } from "@mui/material/styles";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 
+import { gql, useQuery } from "@apollo/client";
+
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -41,8 +43,24 @@ function a11yProps(index: number) {
   };
 }
 
+const OBTER_INFORMACOES = gql`
+  query obterInformacoes {
+    favoriteBooks {
+      name
+      author {
+        id
+        name
+      }
+    }
+  }
+`;
+
 export default function Body() {
   const [value, setValue] = React.useState(0);
+
+  const { data } = useQuery<{[key: string]: { author: string; name: string }}>(OBTER_INFORMACOES);
+
+  console.log(data);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -192,7 +210,7 @@ export default function Body() {
                 display={"flex"}
                 sx={{ justifyContent: "center" }}
               >
-                {Object.keys(item).map((key) => (
+                {data && Object.keys(data).map((key) => (
                   <>
                     <Grid xs={2} sx={{ margin: 0 }}>
                       <Box
@@ -202,9 +220,9 @@ export default function Body() {
                           textAlign: "center",
                         }}
                       >
-                        <img src={item[key].imagem} alt="" />
-                        <Typography>{item[key].nome}</Typography>
-                        <Typography>{item[key].autor}</Typography>
+                        <img src='/logo.svg' alt="" />
+                        <Typography>{data[key].name}</Typography>
+                        <Typography>{data[key].author}</Typography>
                       </Box>
                     </Grid>
                   </>

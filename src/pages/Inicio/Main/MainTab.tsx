@@ -8,6 +8,7 @@ import { emphasize, styled } from "@mui/material/styles";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import Body from "./components/Body";
+import { gql, useQuery } from "@apollo/client";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -42,8 +43,24 @@ function a11yProps(index: number) {
   };
 }
 
+const OBTER_INFORMACOES = gql`
+  query obterInformacoes {
+    favoriteBooks {
+      name
+      author {
+        id
+        name
+      }
+    }
+  }
+`;
+
 export default function MainTab() {
   const [value, setValue] = React.useState(0);
+
+  const { data } = useQuery<{[key: string]: { author: string; name: string }}>(OBTER_INFORMACOES);
+
+  console.log(data);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
