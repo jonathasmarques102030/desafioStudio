@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useParams } from 'react-router-dom';
 
 import Home from './Home';
 import Livro from './Livro';
@@ -14,5 +14,4 @@ function AppRouter() {
     </Router>
   );
 }
-
 export default AppRouter;

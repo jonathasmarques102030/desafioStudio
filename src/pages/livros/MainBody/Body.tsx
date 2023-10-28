@@ -6,10 +6,11 @@ import ShareIcon from "@mui/icons-material/Share";
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 
 import { gql, useQuery } from "@apollo/client";
+import { useLocation } from "react-router-dom";
 
 const OBTER_INFORMACOES = gql`
-  query obterInformacoes {
-    favoriteBooks {
+  query obterInformacoes($idProduto: String) {
+    favoriteBooks(idProduto: $idProduto) { 
       name
       cover
       author {
@@ -39,14 +40,20 @@ type QueryResponse = {
 };
 
 export default function Body() {
-  const { data } = useQuery<QueryResponse>(OBTER_INFORMACOES);
+  const location = useLocation();
+  const urlParams = new URLSearchParams(location.search);
+  const idProduto = urlParams.get("idProduto");
+
+  const { data } = useQuery<QueryResponse>(OBTER_INFORMACOES, {
+    variables: { idProduto },
+  });
 
   const informacoes =
     data?.favoriteBooks.map((book) => ({
       name: book.name,
       nameAuthor: book.author.name,
       cover: book.cover,
-      description: book.author.books[0].description, 
+      description: book.author.books[0].description,
     })) || [];
 
   console.log(informacoes[0]);
@@ -66,7 +73,12 @@ export default function Body() {
         >
           <Grid item xs={3}>
             <Box>
-              <img src={informacoes[0].cover} alt="" width={"100%"} style={{ borderRadius: '20px' }} />
+              <img
+                src='/logoFilme.svg'
+                alt=""
+                width={"100%"}
+                style={{ borderRadius: "20px" }}
+              />
             </Box>
 
             <Box mt={3}>
@@ -125,7 +137,7 @@ export default function Body() {
               variant="h3"
               sx={{ color: "#555555", size: "34px", fontWeight: "700" }}
             >
-              {informacoes[0].name}
+              oi
             </Typography>
             <Typography
               variant="h5"
@@ -136,31 +148,31 @@ export default function Body() {
                 marginTop: 2,
               }}
             >
-              {informacoes[0].nameAuthor}
+              oi
             </Typography>
             <Typography
               mt={4}
               sx={{ size: "18px", color: "#555555", fontWeight: "400" }}
             >
-              {informacoes[0].description}
+              oi
             </Typography>
             <Typography
               mt={4}
               sx={{ size: "18px", color: "#555555", fontWeight: "400" }}
             >
-              {informacoes[0].description}
+oi
             </Typography>
             <Typography
               mt={4}
               sx={{ size: "18px", color: "#555555", fontWeight: "400" }}
             >
-              {informacoes[0].description}
+oi
             </Typography>
             <Typography
               mt={4}
               sx={{ size: "18px", color: "#555555", fontWeight: "400" }}
             >
-              {informacoes[0].description}
+oi
             </Typography>
             <Grid item mt={3} xs={12}>
               <Box>
