@@ -66,7 +66,7 @@ export default function Body() {
         >
           <Grid item xs={3}>
             <Box>
-              <img src='./logoFilme.svg' alt="" width={"100%"} />
+              <img src={informacoes[0].cover} alt="" width={"100%"} style={{ borderRadius: '20px' }} />
             </Box>
 
             <Box mt={3}>
@@ -125,7 +125,7 @@ export default function Body() {
               variant="h3"
               sx={{ color: "#555555", size: "34px", fontWeight: "700" }}
             >
-              io
+              {informacoes[0].name}
             </Typography>
             <Typography
               variant="h5"
@@ -136,49 +136,31 @@ export default function Body() {
                 marginTop: 2,
               }}
             >
-              oi
+              {informacoes[0].nameAuthor}
             </Typography>
             <Typography
               mt={4}
               sx={{ size: "18px", color: "#555555", fontWeight: "400" }}
             >
-              Simon Basset, o irresistível duque de Hastings, acaba de retornar
-              a Londres depois de seis anos viajando pelo mundo. Rico, bonito e
-              solteiro, ele é um prato cheio para as mães da alta sociedade, que
-              só pensam em arrumar um bom partido para suas filhas.
+              {informacoes[0].description}
             </Typography>
             <Typography
               mt={4}
               sx={{ size: "18px", color: "#555555", fontWeight: "400" }}
             >
-              Simon, porém, tem o firme propósito de nunca se casar. Assim, para
-              se livrar das garras dessas mulheres, precisa de um plano
-              infalível.
+              {informacoes[0].description}
             </Typography>
             <Typography
               mt={4}
               sx={{ size: "18px", color: "#555555", fontWeight: "400" }}
             >
-              É quando entra em cena Daphne Bridgerton, a irmã mais nova de seu
-              melhor amigo. Apesar de espirituosa e dona de uma personalidade
-              marcante, todos os homens que se interessam por ela são velhos
-              demais, pouco inteligentes ou destituídos de qualquer tipo de
-              charme. E os que têm potencial para ser bons maridos só a veem
-              como uma boa amiga. A ideia de Simon é fingir que a corteja. Dessa
-              forma, de uma tacada só, ele conseguirá afastar as jovens
-              obcecadas por um marido e atrairá vários pretendentes para Daphne.
-              Afinal, se um duque está interessado nela, a jovem deve ter mais
-              atrativos do que aparenta.
+              {informacoes[0].description}
             </Typography>
             <Typography
               mt={4}
               sx={{ size: "18px", color: "#555555", fontWeight: "400" }}
             >
-              A ideia de Simon é fingir que a corteja. Dessa forma, de uma
-              tacada só, ele conseguirá afastar as jovens obcecadas por um
-              marido e atrairá vários pretendentes para Daphne. Afinal, se um
-              duque está interessado nela, a jovem deve ter mais atrativos do
-              que aparenta.
+              {informacoes[0].description}
             </Typography>
             <Grid item mt={3} xs={12}>
               <Box>
