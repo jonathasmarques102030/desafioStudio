@@ -5,7 +5,17 @@ import SearchIcon from "@mui/icons-material/Search";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
+import { gql, useQuery } from "@apollo/client";
+
+const OBTER_IMAGEM = gql`
+  query ObterImagem {
+    userPicture
+  }
+`;
+
 export default function Header() {
+  const { data } = useQuery<{ userPicture: string }>(OBTER_IMAGEM);
+
   return (
     <>
       <Grid container>
@@ -48,7 +58,7 @@ export default function Header() {
           <Box>
             <Button sx={{ gap: 1, color: '#555555' }}>
             <InputAdornment position="end">
-              <img src="/jucireide.svg" alt="" />
+            <img src={data?.userPicture} alt="" style={{ borderRadius: '100%' }} width={"32px"} height={'32px'} />
             </InputAdornment>
                 Jucireide
             </Button>

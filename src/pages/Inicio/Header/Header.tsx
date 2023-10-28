@@ -23,7 +23,6 @@ const OBTER_IMAGEM = gql`
 export default function Header() {
   const { data } = useQuery<{ userPicture: string }>(OBTER_IMAGEM);
 
-  console.log(data?.userPicture);
   return (
     <>
       <Grid container>
