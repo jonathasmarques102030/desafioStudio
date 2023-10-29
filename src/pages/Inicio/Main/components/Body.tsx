@@ -8,6 +8,8 @@ import Stack from "@mui/material/Stack";
 
 import { gql, useQuery } from "@apollo/client";
 
+import { Link, useParams } from "react-router-dom";
+
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -34,20 +36,13 @@ function CustomTabPanel(props: TabPanelProps) {
   );
 }
 
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
-
 const OBTER_INFORMACOES = gql`
   query obterInformacoes {
     favoriteBooks {
+      id
       name
       cover
-      author {
-        id
+      author{
         name
         booksCount
         picture
@@ -61,14 +56,16 @@ export default function Body() {
 
   const { data } = useQuery<{
     favoriteBooks: Array<{
-      author: { name: string; booksCount: string; picture: string };
-      cover: string;
+      id: string;
       name: string;
+      cover: string;
+      author: { name: string; booksCount: string; picture: string };
     }>;
   }>(OBTER_INFORMACOES);
 
   const informacoes =
     data?.favoriteBooks.map((book) => ({
+      id: book.id,
       name: book.name,
       nameAuthor: book.author.name,
       cover: book.cover,
@@ -148,6 +145,7 @@ export default function Body() {
                 display: "flex",
               }}
             >
+              <Link to={`/livro/${book.id}`} style={{ textDecoration: "none" }}>
               <Box
                 sx={{
                   textAlign: "initial",
@@ -188,6 +186,7 @@ export default function Body() {
                   {book.nameAuthor}
                 </Typography>
               </Box>
+              </Link>
             </Grid>
           ))}
         </Grid>
@@ -327,6 +326,7 @@ export default function Body() {
         <Grid container spacing={2} mt={5}>
           {informacoes.map((book, index) => (
             <Grid item xs={4} key={index}>
+              <Link to={`/livro/${book.id}`} style={{ textDecoration: "none" }}>
               <Box
                 sx={{
                   display: "flex",
@@ -369,6 +369,7 @@ export default function Body() {
                   </Typography>
                 </Box>
               </Box>
+              </Link>
             </Grid>
           ))}
         </Grid>

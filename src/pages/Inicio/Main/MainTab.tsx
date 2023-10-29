@@ -1,14 +1,12 @@
 import * as React from "react";
 
-import { Box, Button, Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import { emphasize, styled } from "@mui/material/styles";
 import Chip from "@mui/material/Chip";
-import Stack from "@mui/material/Stack";
 import Body from "./components/Body";
-import { gql, useQuery } from "@apollo/client";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -48,78 +46,6 @@ export default function MainTab() {
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
-  };
-
-  
-
-  const artistas: {
-    [key: string]: { imagem: string; nome: string; livros: string };
-  } = {
-    artista1: {
-      imagem: "/mulher.svg",
-      nome: "Connie Brockway",
-      livros: "6 livros",
-    },
-    artista2: {
-      imagem: "/homem.svg",
-      nome: "Connie Brockway",
-      livros: "6 livros",
-    },
-    artista3: {
-      imagem: "/senhor.svg",
-      nome: "Jakob Nielsen",
-      livros: "53 livros",
-    },
-  };
-
-  const biblioteca: {
-    [key: string]: { imagem: string; nome: string; autor: string };
-  } = {
-    filme1: {
-      imagem: "/logoFilme.svg",
-      nome: "O duque e eu (Os Bridgertons – Livro 1)",
-      autor: "Julia Quinn",
-    },
-    filme2: {
-      imagem: "/logoFilme.svg",
-      nome: "O duque e eu (Os Bridgertons – Livro 1)",
-      autor: "Julia Quinn",
-    },
-    filme3: {
-      imagem: "/logoFilme.svg",
-      nome: "O duque e eu (Os Bridgertons – Livro 1)",
-      autor: "Julia Quinn",
-    },
-    filme4: {
-      imagem: "/logoFilme.svg",
-      nome: "O duque e eu (Os Bridgertons – Livro 1)",
-      autor: "Julia Quinn",
-    },
-    filme5: {
-      imagem: "/logoFilme.svg",
-      nome: "O duque e eu (Os Bridgertons – Livro 1)",
-      autor: "Julia Quinn",
-    },
-    filme6: {
-      imagem: "/logoFilme.svg",
-      nome: "O duque e eu (Os Bridgertons – Livro 1)",
-      autor: "Julia Quinn",
-    },
-    filme7: {
-      imagem: "/logoFilme.svg",
-      nome: "O duque e eu (Os Bridgertons – Livro 1)",
-      autor: "Julia Quinn",
-    },
-    filme8: {
-      imagem: "/logoFilme.svg",
-      nome: "O duque e eu (Os Bridgertons – Livro 1)",
-      autor: "Julia Quinn",
-    },
-    filme9: {
-      imagem: "/logoFilme.svg",
-      nome: "O duque e eu (Os Bridgertons – Livro 1)",
-      autor: "Julia Quinn",
-    },
   };
 
   const StyledBreadcrumb = styled(Chip)(({ theme }) => {

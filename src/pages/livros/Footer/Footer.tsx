@@ -10,11 +10,11 @@ export default function Footer() {
         container
         
         sx={{
-          margin: 0,
+          bottom: 0,
           background: "#A076F2",
           border: "none",
           height: "80px",
-          marginTop: 5
+          marginTop: 5,
         }}
       >
         <Grid
@@ -22,6 +22,7 @@ export default function Footer() {
           xs={10}
           display={"flex"}
           sx={{
+            bottom: 0,
             margin: "auto",
             alignItems: "center",
             justifyContent: "space-between",

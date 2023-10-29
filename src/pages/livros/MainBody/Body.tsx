@@ -1,62 +1,62 @@
 import * as React from "react";
-
 import { Box, Button, Grid, InputAdornment, Typography } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
-
 import { gql, useQuery } from "@apollo/client";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const OBTER_INFORMACOES = gql`
-  query obterInformacoes($idProduto: String) {
-    favoriteBooks(idProduto: $idProduto) { 
+query obterInformacoes($bookId: ID!) {
+  book(id: $bookId) {
+    name
+    author {
       name
-      cover
-      author {
-        id
-        name
-        picture
-        booksCount
-        books {
-          description
-        }
-      }
     }
+    description
+    cover
   }
+}
 `;
 
-type QueryResponse = {
-  favoriteBooks: Array<{
-    author: {
-      name: string;
-      booksCount: string;
-      picture: string;
-      books: Array<{ description: string }>;
-    };
-    cover: string;
-    name: string;
-  }>;
-};
-
 export default function Body() {
-  const location = useLocation();
-  const urlParams = new URLSearchParams(location.search);
-  const idProduto = urlParams.get("idProduto");
+  const { bookId } = useParams();
 
-  const { data } = useQuery<QueryResponse>(OBTER_INFORMACOES, {
-    variables: { idProduto },
+  const { data } = useQuery<{
+    book: {
+      name: string;
+      author: {
+        name: string;
+      };
+      description: string;
+      cover: string;
+    };
+  }>(OBTER_INFORMACOES, {
+    variables: { bookId: bookId },
   });
 
-  const informacoes =
-    data?.favoriteBooks.map((book) => ({
-      name: book.name,
-      nameAuthor: book.author.name,
-      cover: book.cover,
-      description: book.author.books[0].description,
-    })) || [];
+  let favoriteBooks: Array<{
+    name: string;
+    author: { name: string };
+    description: string;
+    cover: string;
+  }> = [];
 
-  console.log(informacoes[0]);
+  if (data && data.book) {
+    console.log("Nome do livro:", data.book.name);
+    console.log("Nome do autor:", data.book.author.name);
+    console.log("Descrição:", data.book.description);
+    console.log("Capa:", data.book.cover);
+
+    favoriteBooks.push({
+      name: data.book.name,
+      author: { name: data.book.author.name },
+      description: data.book.description,
+      cover: data.book.cover,
+    });
+  } else {
+    console.log("Dados não encontrados");
+  }
 
   return (
     <>
@@ -74,7 +74,7 @@ export default function Body() {
           <Grid item xs={3}>
             <Box>
               <img
-                src='/logoFilme.svg'
+                src={data?.book.cover}
                 alt=""
                 width={"100%"}
                 style={{ borderRadius: "20px" }}
@@ -137,7 +137,7 @@ export default function Body() {
               variant="h3"
               sx={{ color: "#555555", size: "34px", fontWeight: "700" }}
             >
-              oi
+              {data?.book.name}
             </Typography>
             <Typography
               variant="h5"
@@ -148,31 +148,13 @@ export default function Body() {
                 marginTop: 2,
               }}
             >
-              oi
+              {data?.book.author.name}
             </Typography>
             <Typography
               mt={4}
               sx={{ size: "18px", color: "#555555", fontWeight: "400" }}
             >
-              oi
-            </Typography>
-            <Typography
-              mt={4}
-              sx={{ size: "18px", color: "#555555", fontWeight: "400" }}
-            >
-oi
-            </Typography>
-            <Typography
-              mt={4}
-              sx={{ size: "18px", color: "#555555", fontWeight: "400" }}
-            >
-oi
-            </Typography>
-            <Typography
-              mt={4}
-              sx={{ size: "18px", color: "#555555", fontWeight: "400" }}
-            >
-oi
+              {data?.book.description}
             </Typography>
             <Grid item mt={3} xs={12}>
               <Box>
