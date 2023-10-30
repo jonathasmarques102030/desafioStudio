@@ -43,7 +43,7 @@ export default function Header() {
           </Box>
           <Box>
             <FormControl
-              sx={{ m: 0, width: "50ch", border: "none" }}
+              sx={{ m: 0, border: "none" }}
               color="info"
             >
               <InputLabel color="info" htmlFor="outlined-adornment-password">

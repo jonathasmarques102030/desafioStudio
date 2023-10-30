@@ -14,6 +14,8 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { gql, useQuery } from "@apollo/client";
 
+import './style.css'
+
 const OBTER_IMAGEM = gql`
   query ObterImagem {
     userPicture
@@ -41,9 +43,9 @@ export default function Header() {
           <Box>
             <img src="/logo.svg" alt="" />
           </Box>
-          <Box>
+          <Box className='HeaderElements'>
             <FormControl
-              sx={{ m: 0, width: "50ch", border: "none" }}
+              sx={{ m: 0, border: "none" }}
               color="info"
             >
               <InputLabel color="info" htmlFor="outlined-adornment-password">
@@ -61,7 +63,7 @@ export default function Header() {
               />
             </FormControl>
           </Box>
-          <Box>
+          <Box className='HeaderElements'>
             <Button sx={{ gap: 1, color: "#555555", textTransform: 'none', fontWeight: '700', size: '18px' }}>
               <InputAdornment position="end">
                 <AddCircleIcon sx={{ color: "#555555" }} />
@@ -69,7 +71,7 @@ export default function Header() {
               Adicionar
             </Button>
           </Box>
-          <Box>
+          <Box className='HeaderElements'>
             <Button sx={{ gap: 1, color: "#555555", textTransform: 'none', fontWeight: '700', size: '18px' }}>
               <InputAdornment position="end">
                 <FavoriteIcon sx={{ color: "#555555" }} />

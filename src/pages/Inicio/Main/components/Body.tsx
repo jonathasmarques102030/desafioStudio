@@ -10,6 +10,8 @@ import { gql, useQuery } from "@apollo/client";
 
 import { Link, useParams } from "react-router-dom";
 
+import './style.css'
+
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -101,8 +103,8 @@ export default function Body() {
 
   return (
     <>
-      <Grid container>
-        <Grid item mt={3} xs={12}>
+      <Grid container className="container">
+        <Grid className="firstGridItem" item mt={3} xs={12}>
           <Box
             sx={{
               display: "flex",
@@ -111,6 +113,7 @@ export default function Body() {
             }}
           >
             <Typography
+              className="typographyTitle"
               variant="h4"
               sx={{
                 gap: 1,
@@ -135,10 +138,10 @@ export default function Body() {
             </Button>
           </Box>
         </Grid>
-        <Grid item xs={12} mt={3} display={"flex"}>
+        <Grid item xs={12} sm={12} mt={3} display={"flex"} sx={{ overflow: 'hidden' }}>
           {informacoes.slice(0, 6).map((book, index) => (
             <Grid
-              xs={2}
+              xs={6}
               key={index}
               sx={{
                 margin: 0,
@@ -190,7 +193,7 @@ export default function Body() {
             </Grid>
           ))}
         </Grid>
-        <Grid item mt={4} xs={12}>
+        <Grid className="firstGridItem" item mt={4} xs={12}>
           <Box
             sx={{
               display: "flex",
@@ -199,6 +202,7 @@ export default function Body() {
             }}
           >
             <Typography
+              className="typographyTitle"
               variant="h4"
               sx={{
                 gap: 1,
@@ -228,13 +232,14 @@ export default function Body() {
           xs={12}
           mt={4}
           display={"flex"}
-          sx={{ margin: 0, justifyContent: "space-between" }}
+          sx={{ margin: 0, justifyContent: "space-between", overflowX: 'auto', overflow: 'hidden' }}
         >
           {artistas.slice(0, 3).map((books, index) => (
             <>
               <Grid
                 key={index}
-                xs={3}
+                xs={1}
+                sm={3}
                 display={"flex"}
                 sx={{ alignItems: "center", gap: 2, margin: 0, mt: 4 }}
               >
@@ -281,7 +286,7 @@ export default function Body() {
             </>
           ))}
         </Grid>
-        <Grid item mt={5} xs={12}>
+        <Grid className="firstGridItem" item mt={5} xs={12}>
           <Box
             sx={{
               display: "flex",
@@ -290,6 +295,7 @@ export default function Body() {
             }}
           >
             <Typography
+              className="typographyTitle"
               variant="h4"
               sx={{
                 gap: 1,
@@ -323,9 +329,9 @@ export default function Body() {
             />
           </Stack>
         </Grid>
-        <Grid container spacing={2} mt={5}>
+        <Grid container className="biblioteca" spacing={2} mt={5}>
           {informacoes.map((book, index) => (
-            <Grid item xs={4} key={index}>
+            <Grid item className="itemBiblioteca" mt={5} xs={12} sm={8} md={8} lg={4} key={index} sx={{ border: '3px solid black' }}>
               <Link to={`/livro/${book.id}`} style={{ textDecoration: "none" }}>
               <Box
                 sx={{

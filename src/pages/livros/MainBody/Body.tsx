@@ -64,6 +64,7 @@ export default function Body() {
         <Grid
           item
           xs={10}
+          sm={5}
           display={"flex"}
           sx={{
             margin: "auto",
@@ -71,7 +72,7 @@ export default function Body() {
             marginTop: 6,
           }}
         >
-          <Grid item xs={3}>
+          <Grid item xs={3} sm={1}>
             <Box>
               <img
                 src={data?.book.cover}
