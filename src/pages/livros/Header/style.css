@@ -1,0 +1,19 @@
+@media screen and (max-width: 1068px) {
+    .HeaderElements {
+      display: none;
+      text-decoration: none;
+    }
+    
+    .container {
+      display: none;
+    }
+
+    .itensHeader {
+      display: none;
+    }
+
+    .container .css-1pfy93l-MuiGrid-root {
+      display: none;
+    }
+
+  }

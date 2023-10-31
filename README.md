@@ -1,46 +1,42 @@
-# Getting Started with Create React App
+## Prova frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Criar uma aplicação que irá gerenciar os livros do usuário, mostrando sua biblioteca de livros e informações a respeito de cada livro.
 
-## Available Scripts
+## Pré-requisitos
 
-In the project directory, you can run:
+Antes de começar, certifique-se de ter instalado o Node.js e o npm/yarn em sua máquina.
 
-### `npm start`
+## Instalação:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Clone o repositório: 
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+https://github.com/jonathasmarques102030/desafioStudio.git
 
-### `npm test`
+navegue até a pasta do projeto.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Instale as dependências usando npm install ou yarn install.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Modo de uso:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+`Antes de iniciarmos o servidor, precisamos acessar essa página: `
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+https://cors-anywhere.herokuapp.com/corsdemo
 
-### `npm run eject`
+CORS Anywhere, uma ferramenta que lida com problemas de política de mesma origem (CORS) em aplicações da web. Ele vai nos auxiliar no consumo da nossa api.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Feito isso, usamos o `npm run dev` ou `yarn dev`.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Tecnologias Utilizadas
+React, TypeScript, Material UI, Material Icons, Apollo Client, React Query
+React Router.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Estrutura do Projeto
+A estrutura do projeto está organizada da seguinte maneira:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+src/ - O diretório raiz do código-fonte.
 
-## Learn More
+api/ - Contém a configuração do Apollo Client e os arquivos relacionados à API GraphQL.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+pages/ - Páginas do aplicativo, organizadas de acordo com as rotas.
 
-To learn React, check out the [React documentation](https://reactjs.org/).

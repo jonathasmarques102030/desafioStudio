@@ -17,10 +17,8 @@ code {
 
 ::-webkit-scrollbar-track {
   background-color: #fff;
-  border-radius: 30px;
 }
 
 ::-webkit-scrollbar-thumb {
   background-color: #A076F2;
-  border-radius: 30px;
 }

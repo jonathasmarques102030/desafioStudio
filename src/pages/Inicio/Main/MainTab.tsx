@@ -4,8 +4,6 @@ import { Box, Grid } from "@mui/material";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
-import { emphasize, styled } from "@mui/material/styles";
-import Chip from "@mui/material/Chip";
 import Body from "./components/Body";
 
 interface TabPanelProps {
@@ -47,23 +45,6 @@ export default function MainTab() {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
-
-  const StyledBreadcrumb = styled(Chip)(({ theme }) => {
-    const backgroundColor = "#A076F2";
-    return {
-      backgroundColor,
-      height: theme.spacing(5),
-      color: "#FFF",
-      fontWeight: "bold",
-      "&:hover, &:focus": {
-        backgroundColor: emphasize(backgroundColor, 0.06),
-      },
-      "&:active": {
-        boxShadow: theme.shadows[1],
-        backgroundColor: emphasize(backgroundColor, 0.12),
-      },
-    };
-  }) as typeof Chip;
 
   return (
     <>
