@@ -13,6 +13,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { gql, useQuery } from "@apollo/client";
 
 import './style.css'
+import { Link } from "react-router-dom";
 
 const OBTER_IMAGEM = gql`
   query ObterImagem {
@@ -40,7 +41,9 @@ export default function Header() {
           }}
         >
           <Box>
+          <Link to={'/'} style={{ textDecoration: 'none' }}>
             <img src="/logo.svg" alt="" />
+            </Link>
           </Box>
           <Box className='HeaderElements'>
             <FormControl

@@ -275,19 +275,19 @@ export default function Body() {
           <Stack direction="row" spacing={2} color={"#A076F2"}>
             <Chip
               label="Todos"
-              sx={{ backgroundColor: "#A076F2", color: "#FFF" }}
+              sx={{ backgroundColor: "#A076F2", color: "#FFF", cursor: 'pointer' }}
             />
             <Chip
               label="Romance"
-              sx={{ backgroundColor: "#A076F2", color: "#FFF" }}
+              sx={{ backgroundColor: "#A076F2", color: "#FFF", cursor: 'pointer' }}
             />
             <Chip
               label="Aventura"
-              sx={{ backgroundColor: "#A076F2", color: "#FFF" }}
+              sx={{ backgroundColor: "#A076F2", color: "#FFF", cursor: 'pointer' }}
             />
             <Chip
               label="Comédia"
-              sx={{ backgroundColor: "#A076F2", color: "#FFF" }}
+              sx={{ backgroundColor: "#A076F2", color: "#FFF", cursor: 'pointer' }}
             />
           </Stack>
         </Grid>
